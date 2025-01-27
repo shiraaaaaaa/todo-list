@@ -3,6 +3,6 @@ export type Task = {
     description: string,
     priority: number,
     subjects: string[],
-    dueDate: Date,
+    dueDate: string,
     isDone: boolean
 }
