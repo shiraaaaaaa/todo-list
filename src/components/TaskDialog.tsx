@@ -1,17 +1,19 @@
-import { useState } from 'react'
-
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import { Box, Button, DialogContent, FormLabel, styled, TextField } from '@mui/material';
 import TagsInput from './TagsInput';
 import { Task } from '../types/task';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
+import { useContext } from 'react';
+import { TasksContext } from '../contexts/TasksContext';
 
 export interface TaskDialogProps {
   open: boolean;
-  onClose: (value: string) => void;
+  onClose: () => void;
   task?: Task
 }
+
+type TaskFormField = Omit<Task, 'id' | 'isDone'>
 
 const FormGrid = styled(Box)(() => ({
   display: 'flex',
@@ -19,21 +21,31 @@ const FormGrid = styled(Box)(() => ({
 }));
 
 const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
-  const onSubmit = (values: Task, actions) => {
-    alert(JSON.stringify(values, null, 2));
+  const { setTasks } = useContext(TasksContext);
+
+  const onSubmit = (values: TaskFormField, actions: FormikHelpers<TaskFormField>) => {
+    if (task) {
+      setTasks(tasks => tasks.map((_task) => _task.id === task.id ? { ..._task, ...values } : _task));
+    } else {
+      setTasks(tasks => [...tasks, { ...values, id: Math.random().toString(), isDone: false }]);
+    }
+
+    onClose();
     actions.setSubmitting(false);
   }
+
   return (
     <>
       <Dialog onClose={onClose} open={open}>
         <DialogTitle>{task ? "Edit task" : "Add new task"}</DialogTitle>
         <DialogContent>
-          <Formik initialValues={task || {
-            description: "",
-            priority: null,
-            subjects: [],
-            dueDate: ""
-          }} onSubmit={onSubmit}
+          <Formik initialValues={{
+            description: task?.description || "",
+            priority: task?.priority ?? 0,
+            subjects: task?.subjects || [],
+            dueDate: task?.dueDate?.slice(0, -1) || new Date().toISOString().slice(0, -1)
+          }}
+            onSubmit={onSubmit}
           >
             {props => (<Form onKeyDown={(e) => {
               if (e.key === 'Enter') {
@@ -69,7 +81,7 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
                   <FormLabel htmlFor="dueDate" required>
                     Duo date
                   </FormLabel>
-                  <TextField id="dueDate" name="dueDate" type="date"
+                  <TextField id="dueDate" name="dueDate" type="datetime-local"
                     required size="small" value={props.values.dueDate} onChange={props.handleChange}
                   />
                 </FormGrid>
