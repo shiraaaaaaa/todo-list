@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { TextField } from '@mui/material'
 import { SearchTaskContext } from '../contexts/SearchTaskContext';
 
-function SearchTasks() {
+function SearchTasksInput() {
     const { setSearchValue } = useContext(SearchTaskContext);
     const [text, setText] = useState('')
 
@@ -20,4 +20,4 @@ function SearchTasks() {
     )
 }
 
-export default SearchTasks
+export default SearchTasksInput
