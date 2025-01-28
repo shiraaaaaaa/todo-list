@@ -1,12 +1,13 @@
 import { useContext, useMemo, useState } from 'react'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import TaskCard from '../components/TaskCard';
-import { TasksContext } from '../contexts/TasksContext';
 import { SearchTaskContext } from '../contexts/SearchTaskContext';
 import { Task } from '../types/task';
+import { useAtom } from 'jotai';
+import { tasksAtom } from '../atoms/TasksAtom';
 
 function TasksList() {
-    const { tasks } = useContext(TasksContext);
+    const [tasks] = useAtom(tasksAtom);
     const { searchValue } = useContext(SearchTaskContext);
     const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 
@@ -17,10 +18,13 @@ function TasksList() {
     }, [tasks, searchValue]);
 
     return (
-        <Box display='flex' flexDirection="column" gap="10px">
-            {filteredTasks.map((task, index) => (
-                <TaskCard task={task} key={index} />
-            ))}
+        <Box >
+            {filteredTasks.length === 0 ? <Typography>No Results</Typography> :
+                <Box display='flex' flexDirection="column" gap="10px">
+                    {filteredTasks.map((task, index) => (
+                        <TaskCard task={task} key={index} />
+                    ))}
+                </Box>}
         </Box>
     )
 }

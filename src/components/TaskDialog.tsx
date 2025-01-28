@@ -4,8 +4,8 @@ import { Box, Button, DialogContent, FormLabel, styled, TextField } from '@mui/m
 import TagsInput from './TagsInput';
 import { Task } from '../types/task';
 import { Form, Formik, FormikHelpers } from 'formik';
-import { useContext } from 'react';
-import { TasksContext } from '../contexts/TasksContext';
+import { useAtom } from 'jotai';
+import { addTaskAtom, updateTaskAtom } from '../atoms/TasksAtom';
 
 export interface TaskDialogProps {
   open: boolean;
@@ -21,13 +21,14 @@ const FormGrid = styled(Box)(() => ({
 }));
 
 const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
-  const { setTasks } = useContext(TasksContext);
+  const [, updateTask] = useAtom(updateTaskAtom)
+  const [, addTask] = useAtom(addTaskAtom)
 
   const onSubmit = (values: TaskFormField, actions: FormikHelpers<TaskFormField>) => {
     if (task) {
-      setTasks(tasks => tasks.map((_task) => _task.id === task.id ? { ..._task, ...values } : _task));
+      updateTask(task.id, values);
     } else {
-      setTasks(tasks => [...tasks, { ...values, id: Math.random().toString(), isDone: false }]);
+      addTask({ ...values, id: Math.random().toString(), isDone: false });
     }
 
     onClose();

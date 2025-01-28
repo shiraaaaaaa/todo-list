@@ -3,9 +3,10 @@ import { Task } from '../types/task'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DoneIcon from '@mui/icons-material/Done';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import TaskDialog from './TaskDialog';
-import { TasksContext } from '../contexts/TasksContext';
+import { useAtom } from 'jotai';
+import { deleteTaskAtom, updateTaskAtom } from '../atoms/TasksAtom';
 
 
 const Subject = styled('div')({
@@ -35,19 +36,12 @@ const PriorityCircle = styled('div')({
 
 
 function TaskCard({ task }: { task: Task }) {
-    const { setTasks } = useContext(TasksContext);
-    const [open, setOpen] = useState(false)
-
-
-    const deleteTask = (taskId: string) => {
-        setTasks(tasks => ([...tasks.filter((_task) => _task.id !== taskId)]))
-    }
+    const [, updateTask] = useAtom(updateTaskAtom)
+    const [, deleteTask] = useAtom(deleteTaskAtom)
+    const [isDialogOpen, setIsDialogOpen] = useState(false)
 
     const changeIsDone = (task: Task) => {
-        setTasks(tasks =>
-            tasks.map((_task) =>
-                _task.id === task.id ? { ..._task, isDone: !task.isDone } : _task)
-        )
+        updateTask(task.id, { isDone: !task.isDone })
     }
 
     return (
@@ -61,7 +55,7 @@ function TaskCard({ task }: { task: Task }) {
                                 <Typography variant='h5'>{task.description}</Typography>
                             </Box>
                             <Box display='flex'>
-                                <IconButton onClick={() => { setOpen(true) }} title='edit'>
+                                <IconButton onClick={() => { setIsDialogOpen(true) }} title='edit'>
                                     <EditIcon />
                                 </IconButton>
                                 <IconButton onClick={() => { deleteTask(task.id) }} title='delete'>
@@ -83,7 +77,7 @@ function TaskCard({ task }: { task: Task }) {
                     </Box>
                 </CardContent>
             </Card>
-            <TaskDialog task={task} open={open} onClose={() => setOpen(false)} />
+            <TaskDialog task={task} open={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
         </>
 
     )
