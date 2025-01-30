@@ -36,16 +36,16 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
   }
 
   return (
-    <>
       <Dialog onClose={onClose} open={open}>
         <DialogTitle>{task ? "Edit task" : "Add new task"}</DialogTitle>
         <DialogContent>
-          <Formik initialValues={{
-            description: task?.description || "",
-            priority: task?.priority ?? 0,
-            subjects: task?.subjects || [],
-            dueDate: task?.dueDate?.slice(0, -1) || new Date().toISOString().slice(0, -1)
-          }}
+          <Formik
+            initialValues={{
+              description: task?.description || "",
+              priority: task?.priority ?? 0,
+              subjects: task?.subjects || [],
+              dueDate: task?.dueDate?.slice(0, -1) || new Date().toISOString().slice(0, -1)
+            }}
             onSubmit={onSubmit}
           >
             {props => (<Form onKeyDown={(e) => {
@@ -53,7 +53,6 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
                 e.preventDefault();
               }
             }}>
-
               <Box width="400px" display="flex" flexDirection="column" alignContent="center" gap="15px">
                 <FormGrid >
                   <FormLabel htmlFor="description" required>
@@ -72,10 +71,9 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
                   />
                 </FormGrid>
                 <FormGrid >
-                  <FormLabel htmlFor="tags" required>
+                  <FormLabel htmlFor='subjects'>
                     Subjects
                   </FormLabel>
-
                   <TagsInput></TagsInput>
                 </FormGrid>
                 <FormGrid >
@@ -87,14 +85,11 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
                   />
                 </FormGrid>
                 <Button type="submit" variant='outlined'>{task ? "save changes" : "submit"}</Button>
-
               </Box>
             </Form>)}
           </Formik>
         </DialogContent>
-
       </Dialog >
-    </>
   )
 }
 
