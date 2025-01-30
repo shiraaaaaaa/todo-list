@@ -9,22 +9,21 @@ import { useAtom } from 'jotai';
 import { deleteTaskAtom, updateTaskAtom } from '../atoms/TasksAtom';
 
 
-const Subject = styled('div')({
+const SubjectButton = styled('div')(({ theme }) => ({
     color: 'white',
     fontSize: 10,
-    backgroundColor: 'violet',
+    backgroundColor: theme.palette.secondary.main,
     padding: 4,
     boxShadow: '0 0 3px rgba(0,0,0,0.2)',
-    width: 'fit-content',
     borderRadius: 4,
     margin: "3px 2px"
-});
+}));
 
-const PriorityCircle = styled('div')({
+const PriorityCircle = styled('div')(({ theme }) => ({
     borderRadius: '50%',
     width: 20,
     height: 20,
-    backgroundColor: 'blueviolet',
+    backgroundColor: theme.palette.secondary.main,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -32,7 +31,7 @@ const PriorityCircle = styled('div')({
     fontSize: 12,
     fontWeight: 'bold',
     boxShadow: '0 0 3px rgba(0,0,0,0.2)',
-})
+}))
 
 
 function TaskCard({ task }: { task: Task }) {
@@ -48,8 +47,8 @@ function TaskCard({ task }: { task: Task }) {
         <>
             <Card>
                 <CardContent>
-                    <Box display="flex" flexDirection="column" width="500px">
-                        <Box display='flex' justifyContent='space-between' alignItems="center">
+                    <Box display="flex" flexDirection="column" alignItems="flex-start">
+                        <Box width="100%" display='flex' justifyContent='space-between' alignItems="center">
                             <Box alignItems="center" display="flex" gap="10px">
                                 <PriorityCircle>{task.priority}</PriorityCircle>
                                 <Typography variant='h5'>{task.description}</Typography>
@@ -66,12 +65,12 @@ function TaskCard({ task }: { task: Task }) {
                                 </IconButton>
                             </Box>
                         </Box>
-                        <Typography variant='caption'>{task.dueDate}</Typography>
+                        <Typography >DUO DATE- {new Date(task.dueDate).toLocaleString()}</Typography>
                         <Box display='flex' justifyContent='flex-start' flexWrap='wrap'>
                             {task.subjects.map((subject, index) => (
-                                <Subject key={index}  >
+                                <SubjectButton key={index}  >
                                     {subject.toLocaleUpperCase()}
-                                </Subject>
+                                </SubjectButton>
                             ))}
                         </Box>
                     </Box>
