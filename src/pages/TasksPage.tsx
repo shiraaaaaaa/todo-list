@@ -5,14 +5,13 @@ import TasksList from '../components/TasksList';
 import SearchTasksInput from '../components/SearchTasksInput';
 import SearchTaskProvider from '../providers/SearchTaskProviders';
 
-
 function TasksPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   return (
     <SearchTaskProvider>
-      <Box>
-        <Box display="flex" justifyContent="space-between">
+      <Box marginX="10%">
+        <Box display="flex" justifyContent="center" gap={3}>
           <Button variant='contained' onClick={() => setIsDialogOpen(true)}>add task</Button>
           <SearchTasksInput />
         </Box>
