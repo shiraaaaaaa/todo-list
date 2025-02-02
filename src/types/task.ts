@@ -4,5 +4,6 @@ export type Task = {
     priority: number,
     subjects: string[],
     dueDate: string,
-    isDone: boolean
+    isDone: boolean,
+    coordinates: [number, number]
 }

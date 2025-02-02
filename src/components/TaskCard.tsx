@@ -65,7 +65,8 @@ function TaskCard({ task }: { task: Task }) {
                                 </IconButton>
                             </Box>
                         </Box>
-                        <Typography >DUO DATE- {new Date(task.dueDate).toLocaleString()}</Typography>
+                        <Typography>duo date- {new Date(task.dueDate).toLocaleString()}</Typography>
+                        <Typography>location- {task.coordinates.toString()}</Typography>
                         <Box display='flex' justifyContent='flex-start' flexWrap='wrap'>
                             {task.subjects.map((subject, index) => (
                                 <SubjectButton key={index}  >
