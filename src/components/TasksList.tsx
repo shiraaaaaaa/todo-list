@@ -4,7 +4,7 @@ import TaskCard from '../components/TaskCard';
 import { SearchTaskContext } from '../contexts/SearchTaskContext';
 import { Task } from '../types/task';
 import { useAtom } from 'jotai';
-import { tasksAtom } from '../atoms/TasksAtom';
+import { tasksAtom } from '../atoms/tasksAtom';
 
 function TasksList() {
     const [tasks] = useAtom(tasksAtom);

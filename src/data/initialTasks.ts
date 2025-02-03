@@ -1,4 +1,6 @@
-const tasks = [
+import { Task } from "../types/task"
+
+const tasks: Task[] = [
     {
         id: '1',
         description: 'Do homework',
@@ -6,7 +8,7 @@ const tasks = [
         subjects: ['math', 'english', "school", "chore", "homework"],
         dueDate: new Date().toISOString(),
         isDone: false,
-        coordinates: [35.13184529079918,31.28811197946996]
+        coordinates: [35.13184529079918, 31.28811197946996]
     },
     {
         id: '2',
@@ -15,7 +17,7 @@ const tasks = [
         subjects: ['shopping'],
         dueDate: new Date().toISOString(),
         isDone: false,
-        coordinates: [35.13184529079918,31.28811197946996]
+        coordinates: [35.13184529079918, 31.28811197946996]
     },
     {
         id: '3',
@@ -24,7 +26,7 @@ const tasks = [
         subjects: ['react', 'typescript'],
         dueDate: '2022-01-01',
         isDone: false,
-        coordinates: [34.67675293412006,31.745551972594384]
+        coordinates: [34.67675293412006, 31.745551972594384]
     }
 ]
 

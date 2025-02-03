@@ -6,7 +6,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { useState } from 'react';
 import TaskDialog from './TaskDialog';
 import { useAtom } from 'jotai';
-import { deleteTaskAtom, updateTaskAtom } from '../atoms/TasksAtom';
+import { deleteTaskAtom, updateTaskAtom } from '../atoms/tasksAtom';
 
 
 const SubjectButton = styled('div')(({ theme }) => ({

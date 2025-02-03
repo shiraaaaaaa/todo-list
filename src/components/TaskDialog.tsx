@@ -5,7 +5,7 @@ import TagsInput from './TagsInput';
 import { Task } from '../types/task';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useAtom } from 'jotai';
-import { addTaskAtom, updateTaskAtom } from '../atoms/TasksAtom';
+import { addTaskAtom, updateTaskAtom } from '../atoms/tasksAtom';
 import MapPointInput from './MapPointInput';
 
 

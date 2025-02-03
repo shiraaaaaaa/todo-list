@@ -3,7 +3,7 @@ import { ColumnFiltersState, createColumnHelper, flexRender, getCoreRowModel, ge
 import { Task } from '../types/task';
 import { Table, TableBody, TableCell, TableHead, TableRow, Button, Box, Typography, } from '@mui/material';
 import { useAtom } from 'jotai';
-import { deleteTaskAtom, tasksAtom } from '../atoms/TasksAtom';
+import { deleteTaskAtom, tasksAtom } from '../atoms/tasksAtom';
 import { TableSortLabel } from '@mui/material';
 import TaskDialog from './TaskDialog';
 import DebouncedInput from './DebounceInput';
