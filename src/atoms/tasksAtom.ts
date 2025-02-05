@@ -1,8 +1,9 @@
 import { atom } from 'jotai'
 import { Task } from '../types/task'
 import initialTasks from '../data/initialTasks'
+import { atomWithStorage } from 'jotai/utils'
 
-export const tasksAtom = atom<Task[]>(initialTasks)
+export const tasksAtom = atomWithStorage<Task[]>('tasks', initialTasks)
 
 export const updateTaskAtom = atom<null, [string, Partial<Task>], void>(
     null,
