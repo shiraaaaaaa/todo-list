@@ -1,10 +1,9 @@
-
 import './App.css'
-import Layout from './Layout';
-import HomePage from './pages/HomePage';
-import ManagerPage from './pages/ManagerPage';
+import Layout from './Layout'
+import HomePage from './pages/HomePage'
+import ManagerPage from './pages/ManagerPage'
 import TasksPage from './pages/TasksPage'
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from 'react-router'
 
 function App() {
   return (

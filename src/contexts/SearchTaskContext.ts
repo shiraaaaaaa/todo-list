@@ -1,8 +1,11 @@
-import { createContext } from 'react';
+import { createContext } from 'react'
 
 interface SearchTaskContextData {
-    searchValue: string;
-    setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  searchValue: string
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
 
-export const SearchTaskContext = createContext<SearchTaskContextData>({ searchValue: "", setSearchValue: () => { } });
+export const SearchTaskContext = createContext<SearchTaskContextData>({
+  searchValue: '',
+  setSearchValue: () => {},
+})
