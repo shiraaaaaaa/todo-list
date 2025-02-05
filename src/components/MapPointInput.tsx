@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Map, View } from 'ol'
 import TileLayer from 'ol/layer/Tile'
-import { Box } from '@mui/material'
+import { Box, TextField } from '@mui/material'
 import StadiaMaps from 'ol/source/StadiaMaps.js'
 import { defaults } from 'ol/control'
 import VectorLayer from 'ol/layer/Vector'
@@ -12,6 +12,7 @@ import { fromLonLat, toLonLat } from 'ol/proj'
 import MapLayout from './MapLayout'
 import { useFormikContext } from 'formik'
 import { Task } from '../types/task'
+import { Coordinate } from 'ol/coordinate'
 
 const MapPointInput = () => {
   const { values, setFieldValue } = useFormikContext<Task>()
@@ -47,13 +48,33 @@ const MapPointInput = () => {
   )
 
   myMap.on('click', (event) => {
-    setFieldValue('coordinates', toLonLat(event.coordinate))
-    displayedFeature.setGeometry(new Point(event.coordinate))
+    setCoordinates(toLonLat(event.coordinate))
   })
 
+  const setCoordinates = (lonLat: Coordinate) => {
+    setFieldValue('coordinates', lonLat)
+    displayedFeature.setGeometry(new Point(fromLonLat(lonLat)))
+  }
+
   return (
-    <Box height={300} width={400}>
-      <MapLayout map={myMap} />
+    <Box display="flex" flexDirection="column" gap={1}>
+      <Box display="flex" flexDirection="row">
+        <TextField
+          type="number"
+          onChange={(e) => setCoordinates([Number(e.target.value), values.coordinates[1]])}
+          label="Longitude"
+          value={values.coordinates[0]}
+        />
+        <TextField
+          type="number"
+          onChange={(e) => setCoordinates([values.coordinates[0], Number(e.target.value)])}
+          label="Latitude"
+          value={values.coordinates[1]}
+        />
+      </Box>
+      <Box height={300} width={400}>
+        <MapLayout map={myMap} />
+      </Box>
     </Box>
   )
 }
