@@ -1,11 +1,4 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  IconButton,
-  styled,
-  Typography,
-} from '@mui/material'
+import { Box, Card, CardContent, IconButton, styled, Typography } from '@mui/material'
 import { Task } from '../types/task'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -52,18 +45,8 @@ function TaskCard({ task }: { task: Task }) {
     <>
       <Card>
         <CardContent>
-          <Box
-            display="flex"
-            flexDirection="column"
-            alignItems="flex-start"
-            height="max-content"
-          >
-            <Box
-              width="100%"
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+          <Box display="flex" flexDirection="column" alignItems="flex-start" height="max-content">
+            <Box width="100%" display="flex" justifyContent="space-between" alignItems="center">
               <Box alignItems="center" display="flex" gap="10px">
                 <PriorityCircle>{task.priority}</PriorityCircle>
                 <Typography variant="h5">{task.description}</Typography>
@@ -95,30 +78,17 @@ function TaskCard({ task }: { task: Task }) {
                 </IconButton>
               </Box>
             </Box>
-            <Typography>
-              duo date- {new Date(task.dueDate).toLocaleString()}
-            </Typography>
+            <Typography>duo date- {new Date(task.dueDate).toLocaleString()}</Typography>
             <Typography>location- {task.coordinates.toString()}</Typography>
-            <Box
-              height="max-content"
-              display="flex"
-              justifyContent="flex-start"
-              flexWrap="wrap"
-            >
+            <Box height="max-content" display="flex" justifyContent="flex-start" flexWrap="wrap">
               {task.subjects.map((subject, index) => (
-                <SubjectButton key={index}>
-                  {subject.toLocaleUpperCase()}
-                </SubjectButton>
+                <SubjectButton key={index}>{subject.toLocaleUpperCase()}</SubjectButton>
               ))}
             </Box>
           </Box>
         </CardContent>
       </Card>
-      <TaskDialog
-        task={task}
-        open={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-      />
+      <TaskDialog task={task} open={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
     </>
   )
 }

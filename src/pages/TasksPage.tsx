@@ -18,10 +18,7 @@ function TasksPage() {
           <SearchTasksInput />
         </Box>
         <TasksList />
-        <TaskDialog
-          open={isDialogOpen}
-          onClose={() => setIsDialogOpen(false)}
-        />
+        <TaskDialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
       </Box>
     </SearchTaskProvider>
   )

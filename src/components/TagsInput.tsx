@@ -22,9 +22,7 @@ const TagsInput = () => {
   const [text, setText] = useState('')
 
   const handleRemoveTag = (index: number) => {
-    setFieldValue('subjects', [
-      ...values.subjects.filter((_tag, i) => i !== index),
-    ])
+    setFieldValue('subjects', [...values.subjects.filter((_tag, i) => i !== index)])
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -45,11 +43,7 @@ const TagsInput = () => {
       />
       <Box flexWrap="wrap" width="inherit">
         {values.subjects.map((tag, index) => (
-          <SubjectButton
-            variant="contained"
-            key={index}
-            onClick={() => handleRemoveTag(index)}
-          >
+          <SubjectButton variant="contained" key={index} onClick={() => handleRemoveTag(index)}>
             {tag}
             <CloseIcon fontSize="small" />
           </SubjectButton>

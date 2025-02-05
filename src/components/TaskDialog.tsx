@@ -1,13 +1,6 @@
 import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
-import {
-  Box,
-  Button,
-  DialogContent,
-  FormLabel,
-  styled,
-  TextField,
-} from '@mui/material'
+import { Box, Button, DialogContent, FormLabel, styled, TextField } from '@mui/material'
 import TagsInput from './TagsInput'
 import { Task } from '../types/task'
 import { Form, Formik, FormikHelpers } from 'formik'
@@ -32,10 +25,7 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
   const [, updateTask] = useAtom(updateTaskAtom)
   const [, addTask] = useAtom(addTaskAtom)
 
-  const onSubmit = (
-    values: TaskFormField,
-    actions: FormikHelpers<TaskFormField>,
-  ) => {
+  const onSubmit = (values: TaskFormField, actions: FormikHelpers<TaskFormField>) => {
     if (task) {
       updateTask(task.id, values)
     } else {
@@ -56,9 +46,7 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
             priority: task?.priority ?? 0,
             subjects: task?.subjects || [],
             dueDate: task?.dueDate?.slice(0, 16) || '',
-            coordinates: task?.coordinates || [
-              34.79328939921442, 32.07732843041701,
-            ],
+            coordinates: task?.coordinates || [34.79328939921442, 32.07732843041701],
           }}
           onSubmit={onSubmit}
         >

@@ -68,9 +68,7 @@ const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
         ],
         view: new View({
           center: fromLonLat(
-            tasks[tasks.length - 1]?.coordinates || [
-              34.79328939921442, 32.07732843041701,
-            ],
+            tasks[tasks.length - 1]?.coordinates || [34.79328939921442, 32.07732843041701],
           ),
           zoom: 10,
         }),

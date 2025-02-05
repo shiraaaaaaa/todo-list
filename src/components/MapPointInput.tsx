@@ -16,9 +16,7 @@ import { Task } from '../types/task'
 const MapPointInput = () => {
   const { values, setFieldValue } = useFormikContext<Task>()
 
-  const displayedFeature = new Feature(
-    new Point(fromLonLat(values.coordinates)),
-  )
+  const displayedFeature = new Feature(new Point(fromLonLat(values.coordinates)))
 
   const myMap = useMemo(
     () =>

@@ -9,13 +9,15 @@ function TasksList() {
   const [tasks] = useAtom(tasksAtom)
   const { searchValue } = useContext(SearchTaskContext)
 
-  const filteredTasks = useMemo(() =>
-    searchValue == ''
-      ? tasks
-      : tasks.filter((task) =>
-        task.description.toLowerCase().includes(searchValue.toLowerCase()),
-      )
-    , [tasks, searchValue])
+  const filteredTasks = useMemo(
+    () =>
+      searchValue == ''
+        ? tasks
+        : tasks.filter((task) =>
+            task.description.toLowerCase().includes(searchValue.toLowerCase()),
+          ),
+    [tasks, searchValue],
+  )
 
   return (
     <Box>

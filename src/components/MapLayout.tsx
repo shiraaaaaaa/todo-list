@@ -22,13 +22,7 @@ const MapLayout = ({ map }: { map: Map }) => {
 
   return (
     <Box position="relative" height="100%" width="100%">
-      <Box
-        width="100%"
-        ref={mapContainerRef}
-        position="absolute"
-        top={0}
-        bottom={0}
-      />
+      <Box width="100%" ref={mapContainerRef} position="absolute" top={0} bottom={0} />
     </Box>
   )
 }

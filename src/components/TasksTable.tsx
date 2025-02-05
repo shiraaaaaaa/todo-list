@@ -33,11 +33,7 @@ const TableActions = ({ task }: { task: Task }) => {
 
   return (
     <>
-      <TaskDialog
-        task={task}
-        open={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-      />
+      <TaskDialog task={task} open={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
       <Button onClick={() => setIsDialogOpen(true)}>edit</Button>
       <Button color="error" onClick={() => deleteTask(task.id)}>
         delete
@@ -65,9 +61,7 @@ const TasksTable = () => {
       cell: (info) => info.getValue().join(', '),
       header: () => 'Subjects',
       filterFn: (row: Row<Task>, id, filterValue) =>
-        (row.getValue(id) as string[]).some((subject) =>
-          subject.includes(filterValue),
-        ),
+        (row.getValue(id) as string[]).some((subject) => subject.includes(filterValue)),
     }),
     columnHelper.accessor('dueDate', {
       cell: (info) => new Date(info.getValue()).toLocaleString(),
@@ -114,27 +108,20 @@ const TasksTable = () => {
                     <Typography>
                       {header.isPlaceholder
                         ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                        : flexRender(header.column.columnDef.header, header.getContext())}
                     </Typography>
                     {header.column.getCanSort() ? (
                       <TableSortLabel
                         onClick={header.column.getToggleSortingHandler()}
                         active={!!header.column.getIsSorted()}
-                        direction={
-                          header.column.getIsSorted() === 'asc' ? 'asc' : 'desc'
-                        }
+                        direction={header.column.getIsSorted() === 'asc' ? 'asc' : 'desc'}
                       />
                     ) : null}
                   </Box>
                   {header.column.getCanFilter() ? (
                     <Box maxWidth="max-content">
                       <DebouncedInput
-                        onChange={(value) =>
-                          header.column.setFilterValue(value)
-                        }
+                        onChange={(value) => header.column.setFilterValue(value)}
                         placeholder="Search..."
                         type="text"
                         value={(header.column.getFilterValue() ?? '') as string}

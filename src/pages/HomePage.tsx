@@ -27,9 +27,7 @@ function HomePage() {
       margin="auto"
     >
       <TasksMap onSelect={setSelectedTask} />
-      <Box width="100%">
-        {selectedTask ? <TaskCard task={selectedTask} /> : null}
-      </Box>
+      <Box width="100%">{selectedTask ? <TaskCard task={selectedTask} /> : null}</Box>
     </Box>
   )
 }
