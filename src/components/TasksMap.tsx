@@ -55,7 +55,7 @@ const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
             })
         ],
         view: new View({
-            center: fromLonLat(tasks[tasks.length - 1].coordinates),
+            center: fromLonLat(tasks[tasks.length - 1]?.coordinates || [34.79328939921442, 32.07732843041701]),
             zoom: 10,
         }),
     }), [tasksFeatures])
@@ -72,16 +72,13 @@ const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
     const [tooltipRef, hoveredFeature] = useMapHover(tasksMap)
 
     return (
-        <>
-            <Box position="relative" height="100%" width="100%" margin='auto'>
-                <Chip id="info" variant="filled" ref={tooltipRef}
-                    label={hoveredFeature ? hoveredFeature.get('name') : ""}
-                    sx={{ backgroundColor: "#f8f8f8" }}
-                />
-                <MapLayout map={tasksMap} />
-            </Box>
-        </>
-
+        <Box position="relative" height="100%" width="100%" margin='auto'>
+            <Chip id="info" variant="filled" ref={tooltipRef}
+                label={hoveredFeature ? hoveredFeature.get('name') : ""}
+                sx={{ backgroundColor: "#f8f8f8" }}
+            />
+            <MapLayout map={tasksMap} />
+        </Box>
     );
 };
 
