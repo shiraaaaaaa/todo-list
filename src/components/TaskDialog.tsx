@@ -48,7 +48,7 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
             description: task?.description || "",
             priority: task?.priority ?? 0,
             subjects: task?.subjects || [],
-            dueDate: task?.dueDate?.slice(0, -1) || "",
+            dueDate: task?.dueDate?.slice(0, 16) || "",
             coordinates: task?.coordinates || [34.79328939921442, 32.07732843041701]
           }}
           onSubmit={onSubmit}
