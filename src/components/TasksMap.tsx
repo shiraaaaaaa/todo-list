@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { Map, View } from 'ol';
+import { useMemo, useRef, useState } from 'react';
+import { Map, Overlay, View } from 'ol';
 import TileLayer from 'ol/layer/Tile';
 import { Box, Chip } from '@mui/material';
 import StadiaMaps from 'ol/source/StadiaMaps.js';
@@ -16,10 +16,12 @@ import Select from 'ol/interaction/Select';
 import { Task } from '../types/task';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
-import { Pixel } from 'ol/pixel';
+
 
 const TasksMap = ({ onSelect, selectedTask }: { onSelect: (task: Task | null) => void, selectedTask: Task | null }) => {
     const [tasks] = useAtom(tasksAtom)
+    const tooltipRef = useRef<HTMLDivElement | null>(null);
+    const [hoveredFeature, setHoveredFeature] = useState<FeatureLike | null>(null)
 
     const tasksFeatures = tasks.map(task => new Feature({ geometry: new Point(fromLonLat(task.coordinates)), name: task.description }))
 
@@ -55,6 +57,23 @@ const TasksMap = ({ onSelect, selectedTask }: { onSelect: (task: Task | null) =>
         }),
     }), [])
 
+    const overlay = new Overlay({ element: tooltipRef.current! });
+
+    myMap.addOverlay(overlay);
+
+    myMap.on('pointermove', function (evt) {
+        overlay.setPosition(evt.coordinate);
+        const feature = myMap.getFeaturesAtPixel(evt.pixel)[0]
+
+        if (feature) {
+            setHoveredFeature(feature);
+            tooltipRef.current!.style.visibility = 'visible';
+        } else {
+            tooltipRef.current!.style.visibility = 'hidden';
+        }
+
+    });
+
     myMap.addInteraction(new Select())
     tasksFeatures.forEach((feature, index) => {
         feature.on('change', () => {
@@ -62,35 +81,16 @@ const TasksMap = ({ onSelect, selectedTask }: { onSelect: (task: Task | null) =>
         })
     })
 
-    const [hoveredFeatured, setHoveredFeature] = useState<FeatureLike | null>(null)
-    const [currentPixel, setCurrentPixel] = useState<Pixel | null>(null)
-
-    const displayFeatureInfo = function (pixel: Pixel) {
-        const feature = myMap.getFeaturesAtPixel(pixel)[0];
-        setHoveredFeature(feature ?? null);
-        setCurrentPixel(pixel);
-    };
-
-    myMap.on('pointermove', function (evt) {
-        displayFeatureInfo(evt.pixel);
-    });
-
-
     return (
-        <>
-            <Box position="relative" height="100%" width="100%" margin='auto'>
-                <MapLayout map={myMap} />
-                <Chip id="info" variant="filled"
-                    label={hoveredFeatured ? hoveredFeatured.get("name") : ""}
-                    style={{
-                        position: "absolute",
-                        backgroundColor: "#f8f8f8",
-                        visibility: hoveredFeatured ? 'visible' : 'hidden',
-                        ...currentPixel && { left: currentPixel[0], top: currentPixel[1] },
-                    }}
-                />
-            </Box>
-        </>
+
+        <Box position="relative" height="100%" width="100%" margin='auto'>
+            <MapLayout map={myMap} />
+            <Chip id="info" variant="filled" ref={tooltipRef}
+                label={hoveredFeature ? hoveredFeature.get('name') : ""}
+                sx={{ backgroundColor: "#f8f8f8", padding: "2px" }}
+            />
+        </Box>
+
     );
 };
 
