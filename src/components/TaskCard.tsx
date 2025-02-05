@@ -47,7 +47,7 @@ function TaskCard({ task }: { task: Task }) {
         <>
             <Card>
                 <CardContent>
-                    <Box display="flex" flexDirection="column" alignItems="flex-start">
+                    <Box display="flex" flexDirection="column" alignItems="flex-start" height="max-content">
                         <Box width="100%" display='flex' justifyContent='space-between' alignItems="center">
                             <Box alignItems="center" display="flex" gap="10px">
                                 <PriorityCircle>{task.priority}</PriorityCircle>
@@ -67,7 +67,7 @@ function TaskCard({ task }: { task: Task }) {
                         </Box>
                         <Typography>duo date- {new Date(task.dueDate).toLocaleString()}</Typography>
                         <Typography>location- {task.coordinates.toString()}</Typography>
-                        <Box display='flex' justifyContent='flex-start' flexWrap='wrap'>
+                        <Box height="max-content" display='flex' justifyContent='flex-start' flexWrap='wrap'>
                             {task.subjects.map((subject, index) => (
                                 <SubjectButton key={index}  >
                                     {subject.toLocaleUpperCase()}
