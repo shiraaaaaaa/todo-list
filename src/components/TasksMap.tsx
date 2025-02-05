@@ -13,12 +13,11 @@ import MapLayout from './MapLayout';
 import { tasksAtom } from '../atoms/tasksAtom';
 import { useAtom } from 'jotai';
 import Select from 'ol/interaction/Select';
-import { Task } from '../types/task';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import useMapHover from '../hooks/useMapHover';
 
-const TasksMap = ({ onSelect, selectedTask }: { onSelect: (task: Task | null) => void, selectedTask: Task | null }) => {
+const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
     const [tasks] = useAtom(tasksAtom)
 
     const tasksFeatures = useMemo(() => tasks.map(task => new Feature({
@@ -27,7 +26,7 @@ const TasksMap = ({ onSelect, selectedTask }: { onSelect: (task: Task | null) =>
         isDone: task.isDone
     })), [tasks])
 
-    const myMap = useMemo(() => new Map({
+    const tasksMap = useMemo(() => new Map({
         controls: defaults({
             zoom: false, rotate: false, attribution: false
         }),
@@ -64,13 +63,13 @@ const TasksMap = ({ onSelect, selectedTask }: { onSelect: (task: Task | null) =>
 
     tasksFeatures.forEach((feature, index) => {
         feature.on('change', () => {
-            onSelect(tasks[index] === selectedTask ? null : tasks[index])
+            onSelect(tasks[index].id)
         })
     })
 
-    myMap.addInteraction(new Select())
+    tasksMap.addInteraction(new Select())
 
-    const [tooltipRef, hoveredFeature] = useMapHover(myMap)
+    const [tooltipRef, hoveredFeature] = useMapHover(tasksMap)
 
     return (
         <>
@@ -79,7 +78,7 @@ const TasksMap = ({ onSelect, selectedTask }: { onSelect: (task: Task | null) =>
                     label={hoveredFeature ? hoveredFeature.get('name') : ""}
                     sx={{ backgroundColor: "#f8f8f8" }}
                 />
-                <MapLayout map={myMap} />
+                <MapLayout map={tasksMap} />
             </Box>
         </>
 
