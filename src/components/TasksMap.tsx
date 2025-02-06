@@ -51,15 +51,10 @@ const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
             source: new VectorSource({
               features: tasksFeatures,
             }),
-
             style: (feature) =>
               new Style({
                 image: new Icon({
-                  anchor: [0.5, 0.5],
-                  opacity: 1,
                   scale: 0.05,
-                  anchorXUnits: 'fraction',
-                  anchorYUnits: 'pixels',
                   src: 'https://cdn-icons-png.flaticon.com/512/1521/1521260.png',
                   color: feature.get('isDone') ? 'green' : 'yellow',
                 }),
