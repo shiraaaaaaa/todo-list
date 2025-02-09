@@ -9,24 +9,14 @@ import getDuckIcon from '../helpers/map/styles/duckIcon'
 import { MapOptions } from '../hooks/useMap'
 import { createTileLayer } from '../helpers/map/layers/tileLayer'
 import { createVectorLayer } from '../helpers/map/layers/vectorLayer'
-import { GeoJSON } from 'geojson'
-import { fromLonLat } from 'ol/proj'
 import useMapSelect from '../hooks/useMapSelect'
+import { getTaskGeoJson } from '../helpers/tasks/taskGeoJson'
 
 const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
   const [tasks] = useAtom(tasksAtom)
 
-  const tasksFeatures: GeoJSON[] = tasks.map((task) => ({
-    type: 'Feature',
-    geometry: { type: 'Point', coordinates: fromLonLat(task.coordinates) },
-    properties: {
-      name: task.description,
-      isDone: task.isDone,
-      id: task.id,
-    },
-  }))
-  const vectorLayer = createVectorLayer(tasksFeatures, (feature) =>
-    getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),
+  const vectorLayer = createVectorLayer(tasks.map(getTaskGeoJson),
+    (feature) => getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),
   )
 
   const mapOptions: MapOptions = useMemo(
@@ -39,12 +29,7 @@ const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
 
   const tasksMap = useMap(mapOptions)
 
-  const onMapSelect = (id: string | number | null) => {
-    onSelect(id as string)
-  }
-
-  useMapSelect(tasksMap, onMapSelect, vectorLayer)
-
+  useMapSelect(tasksMap, (id) => onSelect(id as string), vectorLayer)
   const [tooltipRef, hoveredFeature] = useMapHover(tasksMap)
 
   return (
