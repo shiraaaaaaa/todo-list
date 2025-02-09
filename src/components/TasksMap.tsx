@@ -1,83 +1,49 @@
 import { useMemo } from 'react'
-import { Map, View } from 'ol'
-import TileLayer from 'ol/layer/Tile'
 import { Box, Chip } from '@mui/material'
-import StadiaMaps from 'ol/source/StadiaMaps.js'
-import { defaults } from 'ol/control'
-import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
-import Feature from 'ol/Feature'
-import { Point } from 'ol/geom'
-import { fromLonLat } from 'ol/proj'
 import MapLayout from './MapLayout'
 import { tasksAtom } from '../atoms/tasksAtom'
 import { useAtom } from 'jotai'
-import Select from 'ol/interaction/Select'
-import Style from 'ol/style/Style'
-import Icon from 'ol/style/Icon'
 import useMapHover from '../hooks/useMapHover'
+import useMap from '../hooks/useMap'
+import getDuckIcon from '../helpers/map/styles/duckIcon'
+import { MapOptions } from '../hooks/useMap'
+import { createTileLayer } from '../helpers/map/layers/tileLayer'
+import { createVectorLayer } from '../helpers/map/layers/vectorLayer'
+import { GeoJSON } from 'geojson'
+import { fromLonLat } from 'ol/proj'
+import useMapSelect from '../hooks/useMapSelect'
 
 const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
   const [tasks] = useAtom(tasksAtom)
 
-  const tasksFeatures = useMemo(
-    () =>
-      tasks.map(
-        (task) =>
-          new Feature({
-            geometry: new Point(fromLonLat(task.coordinates)),
-            name: task.description,
-            isDone: task.isDone,
-          }),
-      ),
+  const tasksFeatures: GeoJSON[] = tasks.map((task) => ({
+    type: 'Feature',
+    geometry: { type: 'Point', coordinates: fromLonLat(task.coordinates) },
+    properties: {
+      name: task.description,
+      isDone: task.isDone,
+      id: task.id,
+    },
+  }))
+  const vectorLayer = createVectorLayer(tasksFeatures, (feature) =>
+    getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),
+  )
+
+  const mapOptions: MapOptions = useMemo(
+    () => ({
+      view: { center: tasks[0]?.coordinates || [0, 0] },
+      layers: [createTileLayer(), vectorLayer],
+    }),
     [tasks],
   )
 
-  const tasksMap = useMemo(
-    () =>
-      new Map({
-        controls: defaults({
-          zoom: false,
-          rotate: false,
-          attribution: false,
-        }),
-        layers: [
-          new TileLayer({
-            source: new StadiaMaps({
-              layer: 'outdoors',
-            }),
-          }),
-          new VectorLayer({
-            source: new VectorSource({
-              features: tasksFeatures,
-            }),
-            style: (feature) =>
-              new Style({
-                image: new Icon({
-                  scale: 0.05,
-                  src: 'https://cdn-icons-png.flaticon.com/512/1521/1521260.png',
-                  color: feature.get('isDone') ? 'green' : 'yellow',
-                }),
-              }),
-          }),
-        ],
-        view: new View({
-          center: fromLonLat(
-            tasks[tasks.length - 1]?.coordinates || [34.79328939921442, 32.07732843041701],
-          ),
-          zoom: 10,
-        }),
-      }),
-    [tasksFeatures],
-  )
+  const tasksMap = useMap(mapOptions)
 
-  tasksFeatures.forEach((feature, index) => {
-    feature.on('change', () => {
-      onSelect(tasks[index].id)
-    })
-  })
+  const onMapSelect = (id: string | number | null) => {
+    onSelect(id as string)
+  }
 
-  tasksMap.addInteraction(new Select())
+  useMapSelect(tasksMap, onMapSelect, vectorLayer)
 
   const [tooltipRef, hoveredFeature] = useMapHover(tasksMap)
 
