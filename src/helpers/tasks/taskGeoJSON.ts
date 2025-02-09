@@ -1,13 +1,9 @@
-import { fromLonLat } from "ol/proj";
-import { Task } from "../../types/task";
-import { GeoJSON } from "geojson";
+import { Task } from '../../types/task'
+import { createGeoJsonOfPoint } from '../geoJSON'
 
-export const getTaskGeoJson = (task: Task): GeoJSON => ({
-    type: 'Feature',
-    geometry: { type: 'Point', coordinates: fromLonLat(task.coordinates) },
-    properties: {
-        name: task.description,
-        isDone: task.isDone,
-        id: task.id,
-    },
-})
+export const getTaskGeoJson = (task: Task) =>
+  createGeoJsonOfPoint(task.coordinates, {
+    name: task.description,
+    isDone: task.isDone,
+    id: task.id,
+  })
