@@ -10,12 +10,14 @@ import { MapOptions } from '../hooks/useMap'
 import { createTileLayer } from '../helpers/map/layers/tileLayer'
 import { createVectorLayer } from '../helpers/map/layers/vectorLayer'
 import useMapSelect from '../hooks/useMapSelect'
-import { getTaskGeoJson } from '../helpers/tasks/taskGeoJson'
+import { getTaskGeoJson } from '../helpers/tasks/taskGeoJSON'
+import { createFeature } from '../helpers/map/geometry/Feature'
 
 const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
   const [tasks] = useAtom(tasksAtom)
 
-  const vectorLayer = createVectorLayer(tasks.map(getTaskGeoJson),
+  const vectorLayer = createVectorLayer(
+    tasks.map((task) => createFeature(getTaskGeoJson(task))),
     (feature) => getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),
   )
 
