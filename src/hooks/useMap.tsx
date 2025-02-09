@@ -1,6 +1,5 @@
 import { Map, View } from 'ol'
 import { defaults } from 'ol/control'
-import { fromLonLat } from 'ol/proj'
 import { useMemo } from 'react'
 import { Coordinate } from 'ol/coordinate'
 import Layer from 'ol/layer/Layer'
@@ -24,8 +23,9 @@ const useMap = (options: MapOptions) => {
         }),
         layers: options.layers,
         view: new View({
-          center: fromLonLat(options.view?.center || [0, 0]),
+          center: options.view?.center || [0, 0],
           zoom: options.view?.zoom ?? 10,
+          projection: 'EPSG:4326',
         }),
       }),
     [options],
