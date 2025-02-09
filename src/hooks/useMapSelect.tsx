@@ -13,8 +13,6 @@ const useMapSelect = (
     const features = vectorLayer.getSource()?.getFeatures() || []
     features.forEach((feature) => {
       feature.on('change', () => {
-        console.log(feature.get('id'))
-
         onSelect(feature.get('id') || null)
       })
     })
