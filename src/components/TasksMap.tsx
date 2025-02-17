@@ -1,21 +1,18 @@
 import { useMemo } from 'react'
 import { Box, Chip } from '@mui/material'
 import MapLayout from './MapLayout'
-import { tasksAtom } from '../atoms/tasksAtom'
-import { useAtom } from 'jotai'
-import useMapHover from '../hooks/useMapHover'
-import useMap from '../hooks/useMap'
+import useMapHover from '../hooks/map/useMapHover'
+import useMap from '../hooks/map/useMap'
 import getDuckIcon from '../helpers/map/styles/duckIcon'
-import { MapOptions } from '../hooks/useMap'
+import { MapOptions } from '../hooks/map/useMap'
 import { createTileLayer } from '../helpers/map/layers/tileLayer'
 import { createVectorLayer } from '../helpers/map/layers/vectorLayer'
-import useMapSelect from '../hooks/useMapSelect'
+import useMapSelect from '../hooks/map/useMapSelect'
 import { getTaskGeoJson } from '../helpers/tasks/taskGeoJSON'
-import { createFeature } from '../helpers/map/geometry/Feature'
+import { createFeature } from '../helpers/map/geometry/feature'
+import { Task } from '../types/task'
 
-const TasksMap = ({ onSelect }: { onSelect: (taskId: string) => void }) => {
-  const [tasks] = useAtom(tasksAtom)
-
+const TasksMap = ({ tasks, onSelect }: { tasks: Task[]; onSelect: (taskId: string) => void }) => {
   const vectorLayer = createVectorLayer(
     tasks.map((task) => createFeature(getTaskGeoJson(task))),
     (feature) => getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),

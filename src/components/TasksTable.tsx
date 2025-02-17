@@ -21,21 +21,21 @@ import {
   Box,
   Typography,
 } from '@mui/material'
-import { useAtom } from 'jotai'
-import { deleteTaskAtom, tasksAtom } from '../atoms/tasksAtom'
 import { TableSortLabel } from '@mui/material'
 import TaskDialog from './TaskDialog'
 import DebouncedInput from './DebounceInput'
+import useTasks from '../hooks/tasks/useTasks'
+import useDeleteTask from '../hooks/tasks/useDeleteTask'
 
 const TableActions = ({ task }: { task: Task }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [, deleteTask] = useAtom(deleteTaskAtom)
+  const { mutate: deleteTask } = useDeleteTask()
 
   return (
     <>
       <TaskDialog task={task} open={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
       <Button onClick={() => setIsDialogOpen(true)}>edit</Button>
-      <Button color="error" onClick={() => deleteTask(task.id)}>
+      <Button color="error" onClick={() => deleteTask(task._id)}>
         delete
       </Button>
     </>
@@ -43,14 +43,13 @@ const TableActions = ({ task }: { task: Task }) => {
 }
 
 const TasksTable = () => {
-  const [tasks] = useAtom(tasksAtom)
+  const { data: tasks, status, error } = useTasks([])
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-
   const columnHelper = createColumnHelper<Task>()
 
   const columns = [
-    columnHelper.accessor('id', {}),
+    columnHelper.accessor('_id', {}),
     columnHelper.accessor('description', {
       header: () => 'Description',
     }),
@@ -78,7 +77,7 @@ const TasksTable = () => {
   ]
 
   const table = useReactTable<Task>({
-    data: tasks,
+    data: tasks!,
     columns,
     getCoreRowModel: getCoreRowModel(),
     state: {
@@ -90,6 +89,14 @@ const TasksTable = () => {
     getFilteredRowModel: getFilteredRowModel(),
     onSortingChange: setSorting,
   })
+
+  if (status === 'pending') {
+    return <div>Loading...</div>
+  }
+
+  if (status === 'error') {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <Table>

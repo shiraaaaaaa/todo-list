@@ -5,8 +5,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import DoneIcon from '@mui/icons-material/Done'
 import { useState } from 'react'
 import TaskDialog from './TaskDialog'
-import { useAtom } from 'jotai'
-import { deleteTaskAtom, updateTaskAtom } from '../atoms/tasksAtom'
+import useUpdateTask from '../hooks/tasks/useUpdateTask'
+import useDeleteTask from '../hooks/tasks/useDeleteTask'
 
 const SubjectButton = styled('div')(({ theme }) => ({
   color: 'white',
@@ -33,12 +33,13 @@ const PriorityCircle = styled('div')(({ theme }) => ({
 }))
 
 function TaskCard({ task }: { task: Task }) {
-  const [, updateTask] = useAtom(updateTaskAtom)
-  const [, deleteTask] = useAtom(deleteTaskAtom)
+  const { mutate: deleteTask } = useDeleteTask()
+  const { mutate: updateTask } = useUpdateTask()
+
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const changeIsDone = (task: Task) => {
-    updateTask(task.id, { isDone: !task.isDone })
+    updateTask({ id: task._id, update: { isDone: !task.isDone } })
   }
 
   return (
@@ -62,7 +63,7 @@ function TaskCard({ task }: { task: Task }) {
                 </IconButton>
                 <IconButton
                   onClick={() => {
-                    deleteTask(task.id)
+                    deleteTask(task._id)
                   }}
                   title="delete"
                 >

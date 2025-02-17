@@ -3,17 +3,25 @@ import TasksMap from '../components/TasksMap'
 import { Task } from '../types/task'
 import TaskCard from '../components/TaskCard'
 import { Box } from '@mui/material'
-import { useAtom } from 'jotai'
-import { tasksAtom } from '../atoms/tasksAtom'
+import useTasks from '../hooks/tasks/useTasks'
 
 function HomePage() {
   const [selectedTaskId, setSelectedTask] = useState<string | null>(null)
-  const [tasks] = useAtom(tasksAtom)
+
+  const { data: tasks, status, error } = useTasks()
 
   const selectedTask = useMemo(
-    () => tasks.find((task: Task) => task.id === selectedTaskId),
+    () => (tasks ? tasks.find((task: Task) => task._id === selectedTaskId) : null),
     [selectedTaskId, tasks],
   )
+
+  if (status === 'pending') {
+    return <div>Loading...</div>
+  }
+
+  if (status === 'error') {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <Box
@@ -26,7 +34,7 @@ function HomePage() {
       gap="20px"
       margin="auto"
     >
-      <TasksMap onSelect={setSelectedTask} />
+      <TasksMap tasks={tasks} onSelect={setSelectedTask} />
       <Box width="100%">{selectedTask ? <TaskCard task={selectedTask} /> : null}</Box>
     </Box>
   )

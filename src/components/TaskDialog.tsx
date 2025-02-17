@@ -4,9 +4,9 @@ import { Box, Button, DialogContent, FormLabel, styled, TextField } from '@mui/m
 import TagsInput from './TagsInput'
 import { Task } from '../types/task'
 import { Form, Formik, FormikHelpers } from 'formik'
-import { useAtom } from 'jotai'
-import { addTaskAtom, updateTaskAtom } from '../atoms/tasksAtom'
 import MapPointInput from './MapPointInput'
+import useCreateTask from '../hooks/tasks/useAddTask'
+import useUpdateTask from '../hooks/tasks/useUpdateTask'
 
 export interface TaskDialogProps {
   open: boolean
@@ -14,7 +14,7 @@ export interface TaskDialogProps {
   task?: Task
 }
 
-type TaskFormField = Omit<Task, 'id' | 'isDone'>
+type TaskFormField = Omit<Task, '_id' | 'id' | 'isDone'>
 
 const FormGrid = styled(Box)(() => ({
   display: 'flex',
@@ -22,14 +22,14 @@ const FormGrid = styled(Box)(() => ({
 }))
 
 const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
-  const [, updateTask] = useAtom(updateTaskAtom)
-  const [, addTask] = useAtom(addTaskAtom)
+  const { mutate: addTask } = useCreateTask()
+  const { mutate: updateTask } = useUpdateTask()
 
   const onSubmit = (values: TaskFormField, actions: FormikHelpers<TaskFormField>) => {
     if (task) {
-      updateTask(task.id, values)
+      updateTask({ id: task._id, update: values })
     } else {
-      addTask({ ...values, id: Math.random().toString(), isDone: false })
+      addTask({ ...values, isDone: false })
     }
 
     onClose()

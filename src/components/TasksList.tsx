@@ -1,23 +1,28 @@
-import { useContext, useMemo } from 'react'
+import { useContext } from 'react'
 import { Box, Typography } from '@mui/material'
 import TaskCard from '../components/TaskCard'
 import { SearchTaskContext } from '../contexts/SearchTaskContext'
-import { useAtom } from 'jotai'
-import { tasksAtom } from '../atoms/tasksAtom'
+import useTasks from '../hooks/tasks/useTasks'
 
 function TasksList() {
-  const [tasks] = useAtom(tasksAtom)
   const { searchValue } = useContext(SearchTaskContext)
 
-  const filteredTasks = useMemo(
-    () =>
-      searchValue == ''
-        ? tasks
-        : tasks.filter((task) =>
-            task.description.toLowerCase().includes(searchValue.toLowerCase()),
-          ),
-    [tasks, searchValue],
-  )
+  const tasks = useTasks()
+
+  const filteredTasks =
+    searchValue == '' || !tasks.data
+      ? tasks.data || []
+      : tasks.data.filter((task) =>
+          task.description.toLowerCase().includes(searchValue.toLowerCase()),
+        )
+
+  if (tasks.isLoading) {
+    return <Typography>Loading...</Typography>
+  }
+
+  if (tasks.isError) {
+    return <Typography>Error: {tasks.error.message}</Typography>
+  }
 
   return (
     <Box>

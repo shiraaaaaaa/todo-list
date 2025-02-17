@@ -3,10 +3,10 @@ import { Box, TextField } from '@mui/material'
 import MapLayout from './MapLayout'
 import { useFormikContext } from 'formik'
 import { Task } from '../types/task'
-import useMap from '../hooks/useMap'
+import useMap from '../hooks/map/useMap'
 import { createTileLayer } from '../helpers/map/layers/tileLayer'
 import { createVectorLayer } from '../helpers/map/layers/vectorLayer'
-import { createFeature, updateFeatureGeometry } from '../helpers/map/geometry/Feature'
+import { createFeature, updateFeatureGeometry } from '../helpers/map/geometry/feature'
 import { createGeoJsonOfPoint } from '../helpers/geoJSON'
 
 const MapPointInput = () => {
