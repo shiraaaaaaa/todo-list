@@ -5,5 +5,5 @@ export const getTaskGeoJson = (task: Task) =>
   createGeoJsonOfPoint(task.coordinates, {
     name: task.description,
     isDone: task.isDone,
-    id: task.id,
+    id: task._id,
   })
