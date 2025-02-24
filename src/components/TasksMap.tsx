@@ -28,7 +28,7 @@ const TasksMap = ({ tasks, onSelect }: { tasks: Task[]; onSelect: (taskId: strin
 
   const tasksMap = useMap(mapOptions)
 
-  useMapSelect(tasksMap, (id) => onSelect(id as string), vectorLayer)
+  useMapSelect(tasksMap, (id) => onSelect(id as string))
   const [tooltipRef, hoveredFeature] = useMapHover(tasksMap)
 
   return (
