@@ -1,10 +1,14 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import './App.css'
-import Layout from './Layout'
-import HomePage from './pages/HomePage'
-import ManagerPage from './pages/ManagerPage'
-import TasksPage from './pages/TasksPage'
+
 import { BrowserRouter, Route, Routes } from 'react-router'
+
+import './App.css'
+
+import Layout from './Layout'
+
+import HomePage from './pages/HomePage'
+import TasksPage from './pages/TasksPage'
+import ManagerPage from './pages/ManagerPage'
 
 function App() {
   const queryClient = new QueryClient()

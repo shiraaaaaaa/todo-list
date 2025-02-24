@@ -1,16 +1,5 @@
 import { useState } from 'react'
-import {
-  ColumnFiltersState,
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  Row,
-  SortingState,
-  useReactTable,
-} from '@tanstack/react-table'
-import { Task } from '../types/task'
+
 import {
   Table,
   TableBody,
@@ -22,10 +11,26 @@ import {
   Typography,
 } from '@mui/material'
 import { TableSortLabel } from '@mui/material'
-import TaskDialog from './TaskDialog'
-import DebouncedInput from './DebounceInput'
+
+import {
+  ColumnFiltersState,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  Row,
+  SortingState,
+  useReactTable,
+} from '@tanstack/react-table'
+
 import useTasks from '../hooks/tasks/useTasks'
 import useDeleteTask from '../hooks/tasks/useDeleteTask'
+
+import { Task } from '../types/task'
+
+import TaskDialog from './TaskDialog'
+import DebouncedInput from './DebounceInput'
 
 const TableActions = ({ task }: { task: Task }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)

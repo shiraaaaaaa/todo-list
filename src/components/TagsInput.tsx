@@ -1,8 +1,10 @@
 import { KeyboardEvent, useState } from 'react'
-import { Box, Button, styled, TextField } from '@mui/material'
 
 import CloseIcon from '@mui/icons-material/Close'
+import { Box, Button, styled, TextField } from '@mui/material'
+
 import { useFormikContext } from 'formik'
+
 import { Task } from '../types/task'
 
 export interface TagsInputProps {

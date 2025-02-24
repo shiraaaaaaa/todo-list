@@ -1,12 +1,16 @@
-import DialogTitle from '@mui/material/DialogTitle'
 import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
 import { Box, Button, DialogContent, FormLabel, styled, TextField } from '@mui/material'
-import TagsInput from './TagsInput'
-import { Task } from '../types/task'
+
 import { Form, Formik, FormikHelpers } from 'formik'
-import MapPointInput from './MapPointInput'
+
 import useCreateTask from '../hooks/tasks/useAddTask'
 import useUpdateTask from '../hooks/tasks/useUpdateTask'
+
+import { Task } from '../types/task'
+
+import MapPointInput from './MapPointInput'
+import TagsInput from './TagsInput'
 
 export interface TaskDialogProps {
   open: boolean

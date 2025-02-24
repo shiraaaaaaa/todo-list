@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { getTasks } from '../../utils/tasks'
+
 import { Task } from '../../types/task'
+import { getTasks } from '../../utils/tasks'
 
 const useTasks = (initialTasks?: Task[]) => {
   return useQuery({

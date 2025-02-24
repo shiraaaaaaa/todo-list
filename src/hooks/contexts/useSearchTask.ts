@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+
 import { SearchTaskContext, SearchTaskContextData } from '../../contexts/SearchTaskContext'
 
 const defaultValue = {}

@@ -1,8 +1,9 @@
-import { Map, View } from 'ol'
-import { defaults } from 'ol/control'
 import { useMemo } from 'react'
-import { Coordinate } from 'ol/coordinate'
+
+import { Map, View } from 'ol'
 import Layer from 'ol/layer/Layer'
+import { defaults } from 'ol/control'
+import { Coordinate } from 'ol/coordinate'
 
 export type MapOptions = {
   view?: Partial<{

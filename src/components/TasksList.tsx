@@ -1,7 +1,10 @@
 import { Box, Typography } from '@mui/material'
+
 import TaskCard from '../components/TaskCard'
-import useTasks from '../hooks/tasks/useTasks'
+
 import { useSearchTaskContext } from '../hooks/contexts/useSearchTask'
+
+import useTasks from '../hooks/tasks/useTasks'
 
 function TasksList() {
   const { searchValue } = useSearchTaskContext()

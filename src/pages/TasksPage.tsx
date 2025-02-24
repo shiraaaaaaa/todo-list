@@ -1,8 +1,11 @@
 import { useState } from 'react'
-import TaskDialog from '../components/TaskDialog'
+
 import { Box, Button } from '@mui/material'
+
 import TasksList from '../components/TasksList'
+import TaskDialog from '../components/TaskDialog'
 import SearchTasksInput from '../components/SearchTasksInput'
+
 import SearchTaskProvider from '../providers/SearchTaskProviders'
 
 function TasksPage() {

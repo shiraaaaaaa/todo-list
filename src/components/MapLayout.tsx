@@ -1,6 +1,8 @@
 import { useRef, useEffect } from 'react'
-import Map from 'ol/Map'
+
 import { Box } from '@mui/material'
+
+import Map from 'ol/Map'
 
 const MapLayout = ({ map }: { map: Map }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null)

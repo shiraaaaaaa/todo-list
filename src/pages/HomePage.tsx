@@ -1,9 +1,13 @@
 import { useMemo, useState } from 'react'
-import TasksMap from '../components/TasksMap'
-import { Task } from '../types/task'
-import TaskCard from '../components/TaskCard'
+
 import { Box } from '@mui/material'
+
+import TaskCard from '../components/TaskCard'
+import TasksMap from '../components/TasksMap'
+
 import useTasks from '../hooks/tasks/useTasks'
+
+import { Task } from '../types/task'
 
 function HomePage() {
   const [selectedTaskId, setSelectedTask] = useState<string | null>(null)

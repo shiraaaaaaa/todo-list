@@ -1,12 +1,16 @@
-import { Box, Card, CardContent, IconButton, styled, Typography } from '@mui/material'
-import { Task } from '../types/task'
+import { useState } from 'react'
+
+import DoneIcon from '@mui/icons-material/Done'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
-import DoneIcon from '@mui/icons-material/Done'
-import { useState } from 'react'
-import TaskDialog from './TaskDialog'
-import useUpdateTask from '../hooks/tasks/useUpdateTask'
+import { Box, Card, CardContent, IconButton, styled, Typography } from '@mui/material'
+
 import useDeleteTask from '../hooks/tasks/useDeleteTask'
+import useUpdateTask from '../hooks/tasks/useUpdateTask'
+
+import { Task } from '../types/task'
+
+import TaskDialog from './TaskDialog'
 
 const SubjectButton = styled('div')(({ theme }) => ({
   color: 'white',

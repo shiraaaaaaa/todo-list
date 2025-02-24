@@ -1,6 +1,6 @@
-import OlGeoJSON from 'ol/format/GeoJSON.js'
 import { GeoJSON } from 'geojson'
 import { Feature } from 'ol'
+import OlGeoJSON from 'ol/format/GeoJSON.js'
 
 export const createFeature = (geoJson: GeoJSON) => {
   return new OlGeoJSON().readFeature(geoJson)

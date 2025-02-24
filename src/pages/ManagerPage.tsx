@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import TasksTable from '../components/TasksTable'
-import TaskDialog from '../components/TaskDialog'
+
 import { Button } from '@mui/material'
+
+import TaskDialog from '../components/TaskDialog'
+import TasksTable from '../components/TasksTable'
 
 function ManagerPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
