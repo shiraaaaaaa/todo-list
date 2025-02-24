@@ -1,11 +1,10 @@
-import { useContext } from 'react'
 import { Box, Typography } from '@mui/material'
 import TaskCard from '../components/TaskCard'
-import { SearchTaskContext } from '../contexts/SearchTaskContext'
 import useTasks from '../hooks/tasks/useTasks'
+import { useSearchTaskContext } from '../hooks/contexts/useSearchTask'
 
 function TasksList() {
-  const { searchValue } = useContext(SearchTaskContext)
+  const { searchValue } = useSearchTaskContext()
 
   const tasks = useTasks()
 

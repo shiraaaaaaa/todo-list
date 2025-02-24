@@ -1,11 +1,10 @@
-import { useContext } from 'react'
 import { InputAdornment } from '@mui/material'
-import { SearchTaskContext } from '../contexts/SearchTaskContext'
 import DebouncedInput from './DebounceInput'
 import SearchIcon from '@mui/icons-material/Search'
+import { useSearchTaskContext } from '../hooks/contexts/useSearchTask'
 
 function SearchTasksInput() {
-  const { searchValue, setSearchValue } = useContext(SearchTaskContext)
+  const { searchValue, setSearchValue } = useSearchTaskContext()
 
   return (
     <DebouncedInput

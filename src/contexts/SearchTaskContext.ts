@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-interface SearchTaskContextData {
+export interface SearchTaskContextData {
   searchValue: string
   setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
