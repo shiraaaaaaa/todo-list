@@ -13,9 +13,13 @@ import { createFeature } from '../helpers/map/geometry/feature'
 import { Task } from '../types/task'
 
 const TasksMap = ({ tasks, onSelect }: { tasks: Task[]; onSelect: (taskId: string) => void }) => {
-  const vectorLayer = createVectorLayer(
-    tasks.map((task) => createFeature(getTaskGeoJson(task))),
-    (feature) => getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),
+  const vectorLayer = useMemo(
+    () =>
+      createVectorLayer(
+        tasks.map((task) => createFeature(getTaskGeoJson(task))),
+        (feature) => getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),
+      ),
+    [tasks],
   )
 
   const mapOptions: MapOptions = useMemo(
@@ -23,7 +27,7 @@ const TasksMap = ({ tasks, onSelect }: { tasks: Task[]; onSelect: (taskId: strin
       view: { center: tasks[0]?.coordinates || [0, 0] },
       layers: [createTileLayer(), vectorLayer],
     }),
-    [tasks],
+    [tasks, vectorLayer],
   )
 
   const tasksMap = useMap(mapOptions)
