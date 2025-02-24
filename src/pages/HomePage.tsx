@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { Box } from '@mui/material'
 
 import TaskCard from '../components/TaskCard'
-import TasksMap from '../components/TasksMap'
+import TasksMap from '../components/HomePage/TasksMap'
 
 import useTasks from '../hooks/tasks/useTasks'
 

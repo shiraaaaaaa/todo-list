@@ -2,20 +2,20 @@ import { useMemo } from 'react'
 
 import { Box, Chip } from '@mui/material'
 
-import getDuckIcon from '../helpers/map/styles/duckIcon'
-import { getTaskGeoJson } from '../helpers/tasks/taskGeoJSON'
-import { createFeature } from '../helpers/map/geometry/feature'
-import { createTileLayer } from '../helpers/map/layers/tileLayer'
-import { createVectorLayer } from '../helpers/map/layers/vectorLayer'
+import getDuckIcon from '../../helpers/map/styles/duckIcon'
+import { getTaskGeoJson } from '../../helpers/tasks/taskGeoJSON'
+import { createFeature } from '../../helpers/map/geometry/feature'
+import { createTileLayer } from '../../helpers/map/layers/tileLayer'
+import { createVectorLayer } from '../../helpers/map/layers/vectorLayer'
 
-import useMap from '../hooks/map/useMap'
-import { MapOptions } from '../hooks/map/useMap'
-import useMapHover from '../hooks/map/useMapHover'
-import useMapSelect from '../hooks/map/useMapSelect'
+import useMap from '../../hooks/map/useMap'
+import { MapOptions } from '../../hooks/map/useMap'
+import useMapHover from '../../hooks/map/useMapHover'
+import useMapSelect from '../../hooks/map/useMapSelect'
 
-import { Task } from '../types/task'
+import { Task } from '../../types/task'
 
-import MapLayout from './MapLayout'
+import MapLayout from '../MapLayout'
 
 const TasksMap = ({ tasks, onSelect }: { tasks: Task[]; onSelect: (taskId: string) => void }) => {
   const vectorLayer = useMemo(

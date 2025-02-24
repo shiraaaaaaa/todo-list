@@ -4,10 +4,10 @@ import { Box, Button, DialogContent, FormLabel, styled, TextField } from '@mui/m
 
 import { Form, Formik, FormikHelpers } from 'formik'
 
-import useCreateTask from '../hooks/tasks/useAddTask'
-import useUpdateTask from '../hooks/tasks/useUpdateTask'
+import useCreateTask from '../../hooks/tasks/useAddTask'
+import useUpdateTask from '../../hooks/tasks/useUpdateTask'
 
-import { Task } from '../types/task'
+import { Task } from '../../types/task'
 
 import MapPointInput from './MapPointInput'
 import TagsInput from './TagsInput'

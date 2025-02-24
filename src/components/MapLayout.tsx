@@ -9,10 +9,12 @@ const MapLayout = ({ map }: { map: Map }) => {
   const mapInstanceRef = useRef<Map | null>(null)
 
   useEffect(() => {
-    if (mapContainerRef.current && !mapInstanceRef.current) {
-      map.setTarget(mapContainerRef.current)
-      mapInstanceRef.current = map
+    if (!mapContainerRef.current || mapInstanceRef.current) {
+      return
     }
+    
+    map.setTarget(mapContainerRef.current)
+    mapInstanceRef.current = map
 
     return () => {
       if (mapInstanceRef.current) {

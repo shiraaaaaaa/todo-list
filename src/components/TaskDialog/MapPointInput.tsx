@@ -4,16 +4,16 @@ import { Box, TextField } from '@mui/material'
 
 import { useFormikContext } from 'formik'
 
-import { createGeoJsonOfPoint } from '../helpers/geoJSON'
-import { createTileLayer } from '../helpers/map/layers/tileLayer'
-import { createVectorLayer } from '../helpers/map/layers/vectorLayer'
-import { createFeature, updateFeatureGeometry } from '../helpers/map/geometry/feature'
+import { createGeoJsonOfPoint } from '../../helpers/geoJSON'
+import { createTileLayer } from '../../helpers/map/layers/tileLayer'
+import { createVectorLayer } from '../../helpers/map/layers/vectorLayer'
+import { createFeature, updateFeatureGeometry } from '../../helpers/map/geometry/feature'
 
-import useMap from '../hooks/map/useMap'
+import useMap from '../../hooks/map/useMap'
 
-import { Task } from '../types/task'
+import { Task } from '../../types/task'
 
-import MapLayout from './MapLayout'
+import MapLayout from '../MapLayout'
 
 const MapPointInput = () => {
   const { values, setFieldValue } = useFormikContext<Task>()

@@ -24,13 +24,13 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 
-import useTasks from '../hooks/tasks/useTasks'
-import useDeleteTask from '../hooks/tasks/useDeleteTask'
+import useTasks from '../../hooks/tasks/useTasks'
+import useDeleteTask from '../../hooks/tasks/useDeleteTask'
 
-import { Task } from '../types/task'
+import { Task } from '../../types/task'
 
-import TaskDialog from './TaskDialog'
-import DebouncedInput from './DebounceInput'
+import TaskDialog from '../TaskDialog/TaskDialog'
+import DebouncedInput from '../DebounceInput'
 
 const TableActions = ({ task }: { task: Task }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)

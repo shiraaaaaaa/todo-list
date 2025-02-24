@@ -5,7 +5,7 @@ import { Box, Button, styled, TextField } from '@mui/material'
 
 import { useFormikContext } from 'formik'
 
-import { Task } from '../types/task'
+import { Task } from '../../types/task'
 
 export interface TagsInputProps {
   tags: string[]
