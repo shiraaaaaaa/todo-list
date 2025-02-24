@@ -7,28 +7,28 @@ const useMapHover = (map: Map) => {
   const tooltipRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (tooltipRef.current) {
-      const overlay = new Overlay({
-        element: tooltipRef!.current,
-        offset: [5, 5],
-      })
-
-      map.addOverlay(overlay)
-
-      map.on('pointermove', function (evt) {
-        overlay.setPosition(evt.coordinate)
-        const feature = map.getFeaturesAtPixel(evt.pixel)[0]
-
-        if (feature) {
-          setHoveredFeature(feature)
-          setTimeout(() => {
-            tooltipRef!.current!.style.visibility = 'visible'
-          }, 50)
-        } else {
-          tooltipRef!.current!.style.visibility = 'hidden'
-        }
-      })
+    if (!tooltipRef.current) {
+      return
     }
+
+    const overlay = new Overlay({
+      element: tooltipRef!.current,
+      offset: [5, 5],
+    })
+
+    map.addOverlay(overlay)
+
+    map.on('pointermove', function (event) {
+      overlay.setPosition(event.coordinate)
+      const feature = map.getFeaturesAtPixel(event.pixel)[0]
+
+      if (feature) {
+        setHoveredFeature(feature)
+        tooltipRef!.current!.style.visibility = 'visible'
+      } else {
+        tooltipRef!.current!.style.visibility = 'hidden'
+      }
+    })
   }, [tooltipRef, map])
 
   return [tooltipRef, hoveredFeature] as const
