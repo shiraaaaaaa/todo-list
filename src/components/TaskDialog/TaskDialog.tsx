@@ -54,7 +54,7 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
           }}
           onSubmit={onSubmit}
         >
-          {(props) => (
+          {({ values, handleChange }) => (
             <Form
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -80,8 +80,8 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
                     placeholder="Do homework"
                     required
                     size="small"
-                    value={props.values.description}
-                    onChange={props.handleChange}
+                    value={values.description}
+                    onChange={handleChange}
                   />
                 </FormGrid>
                 <FormGrid>
@@ -97,8 +97,8 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
                     }}
                     required
                     size="small"
-                    value={props.values.priority}
-                    onChange={props.handleChange}
+                    value={values.priority}
+                    onChange={handleChange}
                   />
                 </FormGrid>
                 <FormGrid>
@@ -115,8 +115,8 @@ const TaskDialog = ({ open, onClose, task }: TaskDialogProps) => {
                     type="datetime-local"
                     required
                     size="small"
-                    value={props.values.dueDate}
-                    onChange={props.handleChange}
+                    value={values.dueDate}
+                    onChange={handleChange}
                   />
                 </FormGrid>
                 <MapPointInput />
