@@ -11,6 +11,8 @@ const MapLayout = ({ map }: { map: Map }) => {
     if (mapContainerRef.current) {
       map.setTarget(mapContainerRef.current)
     }
+
+    return () => map.setTarget(undefined)
   }, [map])
 
   return (
