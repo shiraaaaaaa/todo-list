@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Button } from '@mui/material'
 
-import TaskDialog from '../components/TaskDialog/TaskDialog'
+import TaskDialog from '../components/TaskDialog'
 import TasksTable from '../components/ManagerPage/TasksTable'
 
 function ManagerPage() {

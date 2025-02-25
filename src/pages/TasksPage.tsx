@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Box, Button } from '@mui/material'
 
 import TasksList from '../components/TasksPage/TasksList'
-import TaskDialog from '../components/TaskDialog/TaskDialog'
+import TaskDialog from '../components/TaskDialog'
 import SearchTasksInput from '../components/TasksPage/SearchTasksInput'
 
 import SearchTaskProvider from '../providers/SearchTaskProviders'

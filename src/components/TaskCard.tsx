@@ -10,7 +10,7 @@ import useUpdateTask from '../hooks/tasks/useUpdateTask'
 
 import { Task } from '../types/task'
 
-import TaskDialog from './TaskDialog/TaskDialog'
+import TaskDialog from './TaskDialog'
 
 const SubjectButton = styled('div')(({ theme }) => ({
   color: 'white',
