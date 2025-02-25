@@ -24,7 +24,7 @@ const MapPointInput = () => {
       view: { center: values.coordinates, zoom: 10 },
       layers: [
         createTileLayer({ type: 'stadia', layer: 'outdoors' }),
-        createVectorLayer([displayedFeature]),
+        createVectorLayer({ features: [displayedFeature] }),
       ],
     }),
     [],

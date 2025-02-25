@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Box, Chip } from '@mui/material'
 
@@ -6,7 +6,7 @@ import getDuckIcon from '../../helpers/map/styles/duckIcon'
 import { getTaskGeoJson } from '../../helpers/tasks/taskGeoJSON'
 import { createFeature } from '../../helpers/map/geometry/feature'
 import { createTileLayer } from '../../helpers/map/layers/tileLayer'
-import { createVectorLayer } from '../../helpers/map/layers/vectorLayer'
+import { createVectorLayer, updateVectorLayer } from '../../helpers/map/layers/vectorLayer'
 
 import useMap from '../../hooks/map/useMap'
 import { MapOptions } from '../../hooks/map/useMap'
@@ -20,19 +20,24 @@ import MapLayout from '../MapLayout'
 const TasksMap = ({ tasks, onSelect }: { tasks: Task[]; onSelect: (taskId: string) => void }) => {
   const vectorLayer = useMemo(
     () =>
-      createVectorLayer(
-        tasks.map((task) => createFeature(getTaskGeoJson(task))),
-        (feature) => getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),
-      ),
-    [tasks],
+      createVectorLayer({
+        style: (feature) => getDuckIcon({ color: feature.get('isDone') ? 'green' : 'yellow' }),
+      }),
+    [],
   )
+
+  useEffect(() => {
+    updateVectorLayer(vectorLayer, {
+      features: tasks.map((task) => createFeature(getTaskGeoJson(task))),
+    })
+  }, [tasks])
 
   const mapOptions: MapOptions = useMemo(
     () => ({
       view: { center: tasks[0]?.coordinates || [0, 0] },
       layers: [createTileLayer(), vectorLayer],
     }),
-    [tasks, vectorLayer],
+    [vectorLayer],
   )
 
   const tasksMap = useMap(mapOptions)
