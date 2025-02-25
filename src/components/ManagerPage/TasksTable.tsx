@@ -1,36 +1,16 @@
 import { useState } from 'react'
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Button,
-  Box,
-  Typography,
-} from '@mui/material'
-import { TableSortLabel } from '@mui/material'
+import { Button } from '@mui/material'
 
-import {
-  ColumnFiltersState,
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  Row,
-  SortingState,
-  useReactTable,
-} from '@tanstack/react-table'
+import { createColumnHelper, Row } from '@tanstack/react-table'
 
 import useTasks from '../../hooks/tasks/useTasks'
 import useDeleteTask from '../../hooks/tasks/useDeleteTask'
 
 import { Task } from '../../types/task'
 
-import TaskDialog from '../TaskDialog/TaskDialog'
-import DebouncedInput from '../DebounceInput'
+import TaskDialog from '../TaskDialog'
+import TableLayout from '../TableLayout'
 
 const TableActions = ({ task }: { task: Task }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -49,8 +29,6 @@ const TableActions = ({ task }: { task: Task }) => {
 
 const TasksTable = () => {
   const { data: tasks, status, error } = useTasks([])
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const columnHelper = createColumnHelper<Task>()
 
   const columns = [
@@ -81,20 +59,6 @@ const TasksTable = () => {
     }),
   ]
 
-  const table = useReactTable<Task>({
-    data: tasks!,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    state: {
-      sorting,
-      columnFilters,
-    },
-    onColumnFiltersChange: setColumnFilters,
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onSortingChange: setSorting,
-  })
-
   if (status === 'pending') {
     return <div>Loading...</div>
   }
@@ -103,63 +67,7 @@ const TasksTable = () => {
     return <div>Error: {error.message}</div>
   }
 
-  return (
-    <Table>
-      <TableHead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <TableCell key={header.id}>
-                <Box
-                  display="flex"
-                  flexDirection="column"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                >
-                  <Box display="flex" flexDirection="row">
-                    <Typography>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </Typography>
-                    {header.column.getCanSort() ? (
-                      <TableSortLabel
-                        onClick={header.column.getToggleSortingHandler()}
-                        active={!!header.column.getIsSorted()}
-                        direction={header.column.getIsSorted() === 'asc' ? 'asc' : 'desc'}
-                      />
-                    ) : null}
-                  </Box>
-                  {header.column.getCanFilter() ? (
-                    <Box maxWidth="max-content">
-                      <DebouncedInput
-                        onChange={(value) => header.column.setFilterValue(value)}
-                        placeholder="Search..."
-                        type="text"
-                        value={(header.column.getFilterValue() ?? '') as string}
-                        size="small"
-                      />
-                    </Box>
-                  ) : null}
-                </Box>
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableHead>
-      <TableBody>
-        {table.getRowModel().rows.map((row) => (
-          <TableRow key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <TableCell key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  )
+  return <TableLayout data={tasks} columns={columns} />
 }
 
 export default TasksTable
