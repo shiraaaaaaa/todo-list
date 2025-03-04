@@ -1,26 +1,16 @@
-import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
   build: {
-    ssr: true,
+    manifest: true, 
+    outDir: 'build',
     rollupOptions: {
-      input: './dist/server/index.js',
+      input: './app/main.jsx', // Our React entrypoint
     },
   },
   server: {
-    proxy: {
-        '/api': {
-          target: 'http://localhost:3000',
-          rewrite: (path) => path.replace('/api', ''),
-          changeOrigin: true,
-          configure: (proxy) => {
-            proxy.on('error', (err) => {
-              console.log('proxy error', err);
-            });
-          },
-        }
-      }
-  }
+    port: 4000, 
+  },
 })
