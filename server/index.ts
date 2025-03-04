@@ -19,8 +19,6 @@ export const createServer = () => {
   
   server.use('/api', proxy(process.env.SERVER_URL!, {
     proxyReqPathResolver: (req) => {
-      console.log(req.url);
-      
       const parts = req.url.split("/api/")
       const newPath = parts.join("/")
       return newPath

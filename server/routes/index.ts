@@ -4,7 +4,7 @@ import { internals } from '../utils/manifest'
 
 const Router = express.Router()
 
-Router.get('/', async (_req, res) => {
+Router.get('*', async (_req, res) => {
   const data = {
     environment: process.env.NODE_ENV,
     manifest: internals.manifest,
