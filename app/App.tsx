@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { BrowserRouter, Route, Routes } from 'react-router'
+import { HashRouter, Route, Routes } from 'react-router'
 
 import './App.css'
 
@@ -15,7 +15,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="list" element={<TasksPage />} />
@@ -23,7 +23,7 @@ function App() {
             <Route path="home" element={<HomePage />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </QueryClientProvider>
   )
 }
