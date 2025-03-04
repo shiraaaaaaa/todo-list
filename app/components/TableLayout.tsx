@@ -16,7 +16,8 @@ import {
 
 import DebouncedInput from './DebounceInput'
 
-const TableLayout = <T,>({ data, columns }: { data: T[]; columns: ColumnDef<T>[] }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const TableLayout = <T,>({ data, columns }: { data: T[]; columns: ColumnDef<T, any>[] }) => {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
